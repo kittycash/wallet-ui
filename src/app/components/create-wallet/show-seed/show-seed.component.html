@@ -1,0 +1,17 @@
+<h3> Recovery Phrase </h3>
+<p>
+  The phrase is case sensitive. Please make sure you write down and save your recovery phrase. You will need this
+  phrase to use and restore your wallet.
+</p>
+
+<div class="row">
+	<div class="col-12">
+		<input type="text" class="form-control monospace" readonly="readonly" [(ngModel)]="seed">
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-12">
+		<button class="btn btn-lg btn-primary" (click)="next()">Yes, I have written it down</button>
+	</div>
+</div>

@@ -1,0 +1,113 @@
+<div class="p-5" style="width: 100%; height: 100%; position: relative; overflow: scroll;">
+	<div class="row">
+		<div class="col-6">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="mb-2">{{kitty.name}}</h2>
+					<div class="cat-box">
+						<div class="row">
+							<div class="col-8 offset-2 text-center">
+								<h2 class="pt-3" *ngIf="kitty.legendary">Legendary</h2>
+								<img [src]="kitty.image" class="img-fluid px-5" alt="{{kitty.name}}">
+
+								<div class="progress my-3 mx-5">
+	                              <div class="progress-bar bg-success" role="progressbar"></div>
+	                            </div>
+	                            <p class="my-3" style="white-space: normal;">{{kitty.bio}}</p>
+		                    </div>	                   
+		           		</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 p-5">
+					<h2>Traits</h2>
+					<div class="row my-2">
+						<div class="col-4 text-center">
+							<img src="assets/traits/unicorn.svg">
+						</div>
+						<div class="col-8 my-auto">
+							<p>Unicorn</p>
+						</div>
+					</div>
+					<div class="row my-2">
+						<div class="col-4 text-center">
+							<img src="assets/traits/amaranth.svg">
+						</div>
+						<div class="col-8 my-auto">
+							<p>Amaranth Light</p>
+						</div>
+					</div>
+					<div class="row my-2">
+						<div class="col-4 text-center">
+							<img src="assets/traits/birdtail.svg">
+						</div>
+						<div class="col-8 my-auto">
+							<p>Birdtail</p>
+						</div>
+					</div>
+					<div class="row my-2">
+						<div class="col-4 text-center">
+							<img src="assets/traits/black.svg">
+						</div>
+						<div class="col-8 my-auto">
+							<p>Black</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="mb-2">Inventory</h2>
+					<div class="row flex-row flex-nowrap cat-box p-4" *ngFor="let entry of inventoryWallet.entries">
+						<div class="col-4 text-center my-auto" *ngFor="let item of entry.kitties">
+							<a (click)="doEquip(item)">
+								<img class="img-fluid" [src]="item.image">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row my-5">
+				<div class="col-12">
+					<h2 class="mb-2">Food</h2>
+					<div class="row flex-row flex-nowrap cat-box p-4" *ngFor="let entry of foodWallet.entries">
+						<div class="col-4 text-center my-auto" *ngFor="let item of entry.kitties">
+							<a (click)="doFeed(item)">
+								<img class="img-fluid" [src]="item.image">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row my-5">
+				<div class="col-12">
+					<h2 class="mb-2">Equipped</h2>
+					<div class="row flex-row flex-nowrap cat-box p-4 my-auto" *ngFor="let entry of foodWallet.entries">
+						<div class="col-6 offset-3 text-center" >
+							<img class="img-fluid" src="assets/inventory/red_dress.svg">
+							<p class="mt-3">Sexy Red Dress</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-2">
+		<div class="col-2">
+			<button class="btn btn-block btn-outline-primary mx-4" (click)="doBuy()">Buy</button>
+		</div>
+		<div class="col-2">
+			<button class="btn btn-block btn-outline-primary mx-4" (click)="doBreed()">Sire</button>
+		</div>
+		<div class="col-2 offset-6">
+			<div class="float-right pointer" style="width: 66px; height: 66px;" (click)="doShowAddress()">
+				<ngx-qrcode qrc-element-type="img" [qrc-value] = "entry.address"></ngx-qrcode>
+			</div>
+		</div>
+	</div>
+</div>

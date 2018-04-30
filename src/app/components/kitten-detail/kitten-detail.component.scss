@@ -1,0 +1,8 @@
+.cat-box {
+	background-color: white;
+	border-radius: 25px;
+}
+
+.cat-box.flex-nowrap {
+	overflow: scroll;
+}

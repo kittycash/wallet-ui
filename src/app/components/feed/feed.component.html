@@ -1,0 +1,26 @@
+<a class="btn-close-modal" (click)="doClose()">X</a>
+<div class="row">
+	<div class="col-12">
+		<h3> Feed {{kitty.name}} </h3>
+		<p class="text-center">What would you like to feed {{kitty.name}}?</p>
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-6 offset-3">
+		<div class="row my-4" *ngFor="let food of availableFood">
+			<div class="col-3 offset-3">
+				<input type="number" class="form-control" min="0" max="10">
+			</div>
+			<div class="col-6">
+				<label>{{food.name}}</label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-12 text-center">
+		<button class="btn btn-primary" (click)="doConfirmFeed()">Confirm</button>
+	</div>
+</div>

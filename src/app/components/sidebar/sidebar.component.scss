@@ -1,0 +1,29 @@
+@import '../../../assets/scss/_variables.scss';
+
+:host {
+  padding: 0 30px;
+}
+
+a {
+  color: #4A4A4A;
+  cursor: pointer;
+  display: block;
+  font-size: 24px;
+  margin-top: 40px;
+}
+
+button {
+  border: $primary-color 2px solid;
+  border-radius: 8px;
+  margin-top: 40px;
+}
+
+
+.btn-create-wallet:hover img{
+    -webkit-filter: brightness(0) invert(1);
+    
+}
+.btn-create-wallet:hover {
+	border-color: white;
+	background-color: $primary-color;
+}

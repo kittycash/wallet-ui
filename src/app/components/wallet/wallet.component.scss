@@ -1,0 +1,11 @@
+@import '../../../assets/scss/_variables.scss';
+
+.wallet-bar h1 {
+	font-family: 'Montserrat-Bold', sans-serif;
+	font-size: 100%;
+	padding-top: 10px;
+}
+
+.kittyred {
+	color: $primary-color !important;
+}

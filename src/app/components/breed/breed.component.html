@@ -1,0 +1,21 @@
+<a class="btn-close-modal" (click)="doClose()">X</a>
+<div class="row">
+	<div class="col-12">
+		<h3> Breed </h3>
+		<p class="text-center">Choose two kitties to breed together</p>
+	</div>
+</div>
+
+
+<div class="row mt-5">
+	<div class="col-4 breed-selection mx-1" *ngFor="let kitty of entry.kitties" (click)="toggleKitty(kitty)" [ngClass]="{'breed-selected': kittySelected(kitty)}">
+		<img class="img-fluid" src="{{kitty.image}}">
+		<p class="text-center">{{kitty.name}}</p>
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-12 text-center">
+		<button class="btn btn-primary" (click)="doConfirmBreed()" [disabled]="selectedKitties.length < 2">Birds and the bees</button>
+	</div>
+</div>

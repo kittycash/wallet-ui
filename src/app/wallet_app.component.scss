@@ -1,0 +1,16 @@
+.-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  app-sidebar {
+    height: 100%;
+    width: 250px;
+  }
+
+  .-content {
+    background-color: #F7F7F7;
+    flex: 1;
+    height: 100%;
+  }
+}

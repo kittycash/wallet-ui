@@ -1,0 +1,14 @@
+@import '../../../../assets/scss/_variables.scss';
+
+.btn-close-modal {
+	color: $primary-color !important;
+	float: right;
+}
+
+.address-panel {
+	border-radius: 25px;
+	background-color: white;
+}
+.address-panel p {
+	word-break: break-word;
+}

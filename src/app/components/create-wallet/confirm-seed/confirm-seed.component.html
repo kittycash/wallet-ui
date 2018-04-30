@@ -1,0 +1,18 @@
+<h3> Recovery Phrase </h3>
+<p>
+  Tap each word in the correct order to verify your recovery phrase
+</p>
+
+<div class="row">
+	<div class="col-3" *ngFor="let word of fake_seeds">
+		<button class="btn btn-block mt-1" [ngClass]="{'btn-primary': wordSelected(word), 'btn-outline-primary': !wordSelected(word)}" (click)="toggleWord(word)">{{word}}</button>
+	</div>
+</div>
+<div class="row mt-5">
+	<div class="col-3 offset-3">
+		<button class="btn btn-block btn-outline-primary" (click)="doCloseWindow()">Cancel</button>
+	</div>
+	<div class="col-3">
+		<button class="btn btn-block btn-primary" (click)="next()">Confirm</button>
+	</div>
+</div>

@@ -1,0 +1,12 @@
+@import '../../../assets/scss/_variables.scss';
+
+.breed-selection {
+	background-color: white;
+	border-radius: 25px;
+}
+.breed-selected {
+	border-style: solid;
+    border-color: $primary-color;
+    border-width: 2px;
+    border-radius: 25px;
+}

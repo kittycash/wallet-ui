@@ -1,0 +1,5 @@
+<a class="btn-close-modal" (click)="closeWindow()">X</a>
+<app-setup *ngIf="step === 1" (onSubmit)="handleStepOne($event)"></app-setup>
+<app-warning *ngIf="step === 2" (onSubmit)="handleStepTwo()"></app-warning>
+<app-show-seed *ngIf="step === 3" [seed]="seed" (onSubmit)="handleStepThree()"></app-show-seed>
+<app-confirm-seed *ngIf="step === 4" [seed]="seed" [fake_seeds]="fake_seeds" (onSubmit)="handleStepFour($event)" (closeWindow)="closeWindow()"></app-confirm-seed>

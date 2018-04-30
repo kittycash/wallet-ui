@@ -1,0 +1,12 @@
+@import '../../../../assets/scss/_variables.scss';
+
+p {
+  font-size: $base-size;
+  margin-bottom: $base-size * 2;
+}
+
+
+.monospace {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 80%;
+}

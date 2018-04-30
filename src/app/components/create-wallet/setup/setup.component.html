@@ -1,0 +1,41 @@
+<h3> Create Wallet </h3>
+<div class="-form" [formGroup]="form">
+  <div class="row field">
+  	<div class="col-12">
+	    <label for="name">Wallet Name</label>
+	    <input id="name" formControlName="name" placeholder="e.g. I love cats">
+	</div>
+  </div>
+  <div class="row">
+  	<div class="col-12">
+	  	<label>Password</label>
+	  	<small style="display:block;">Activate to create password</small>
+	  	<label class="switch float-right">
+		  <input type="checkbox" formControlName="encrypted">
+		  <span class="slider"></span>
+		</label>
+	</div>
+  </div>
+	<div class="row" *ngIf="form.get('encrypted').value">
+		<div class="col-6">
+		  	<label>Wallet Password</label>
+		  	<input type="password" class="form-control" placeholder="Password" formControlName="password">
+		</div>
+		<div class="col-6">
+		  	<label>Repeat Password</label>
+		  	<input type="password" class="form-control" placeholder="Password" formControlName="password2">
+		</div>
+	</div>
+	<div class="row" *ngIf="form.get('encrypted').value">
+		<div class="col-12">
+			<small>Password must contain one capital letter, one number and be at least 6 characters in length</small>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+		  <button class="btn btn-lg btn-primary" [disabled]="!form.valid" (click)="submit()">
+		    Create
+		  </button>
+		</div>
+	</div>
+</div>

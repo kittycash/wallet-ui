@@ -1,0 +1,19 @@
+<div class="cat-box py-3">
+    <button class="btn round-feed-btn" (click)="doEquip()" *ngIf="item.type == 'inventory'"><img src="assets/svg/equip-round.svg"></button>
+    <button class="btn round-feed-btn" (click)="doFeed()" *ngIf="item.type == 'food'"><img src="assets/svg/feed-round.svg"></button>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6 offset-3 text-center">
+                    <p>{{item.quantity}} x</p>
+
+                    <img [src]="item.image" class="img-fluid my-4" alt="{{item.name}}">
+                    
+                    <h1>{{item.name}}</h1>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>

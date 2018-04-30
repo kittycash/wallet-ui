@@ -1,0 +1,32 @@
+<a class="btn-close-modal" (click)="doClose()">X</a>
+<div class="row" style="margin: 0;">
+	<div class="col-12">
+		<h3>{{item.name}}</h3>
+	</div>
+</div>
+
+<div class="row mt-1">
+	<div class="col-6 offset-3 text-center">
+		<p class="text-center">{{item.quantity}} x</p>
+		<img class="img-fluid" [src]="item.image">
+	</div>
+</div>
+
+<div class="row mt-3">
+	<div class="col-6 offset-3 text-center">
+		<p>{{item.description}}</p>
+	</div>
+</div>
+
+<div class="row mt-3">
+	<div class="col-6 offset-3 text-center">
+		<button class="btn btn-outline-primary btn-round" (click)="doConfirmEquip()" *ngIf="item.type == 'inventory'"><img src="assets/svg/equip-btn.svg"> Equip</button>
+		<button class="btn btn-outline-primary btn-round" (click)="doConfirmFeed()" *ngIf="item.type == 'food'"><img src="assets/svg/feed-btn.svg"> Feed</button>
+	</div>
+</div>
+
+<div class="row mt-3">
+	<div class="col-12 text-center">
+		<button class="btn btn-primary" (click)="doClose()">Cancel</button>
+	</div>
+</div>
