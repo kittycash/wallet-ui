@@ -134,22 +134,22 @@ export class WalletService {
               {
                 image: 'assets/inventory/red_dress.svg',
                 quantity: 10,
-                name: 'Sexy red dress',
+                name: 'Red Dress',
                 description: 'Brings all the boy kitties to the yard',
                 type: 'inventory'
               },
               {
-                image: 'assets/inventory/badge.svg',
+                image: 'assets/inventory/spartan_shield.svg',
                 quantity: 10,
-                name: 'Badge',
-                description: 'Attract those lady cats with this quite attractive badge!',
+                name: 'Spartan Shield',
+                description: 'As a true warrior come back with your shield or on it.',
                 type: 'inventory'
               },
               {
-                image: 'assets/inventory/viking_hat.svg',
+                image: 'assets/inventory/spartan_helmet.svg',
                 quantity: 10,
-                name: 'Viking Hat',
-                description: 'It is just like going to Iceland!',
+                name: 'Spartan Helmet',
+                description: 'Tonight we dine in hell!',
                 type: 'inventory'
               }
             ] 
