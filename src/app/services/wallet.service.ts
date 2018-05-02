@@ -4,6 +4,7 @@ import { Wallet, Kitty } from '../app.datatypes';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class WalletService {
@@ -71,23 +72,86 @@ export class WalletService {
     this.currentKittyDetailSubject.next(false);
   }
 
-  loadData() {
-    this.apiService.getWalletsList().subscribe(wallets => {
-      let promises = [];
-   
-       wallets
-      .map((wallet:any) => { return wallet.entries })
-      .map((entries) => {
-        for (let i = 0; i < entries.length; i++)
+  getWalletData(label:string, password:any) {
+     this.apiService.postWalletsGet({ label: label, password: password }).subscribe(wallet => {
+       this.updateWallet(this.addKitties(wallet));
+     }, 
+     error => {
+       alert(error.statusText);
+     });
+  }
+
+  updateWallet(wallet:any) {
+    this.wallets.take(1).subscribe(wallets => { 
+       this.findWalletByLabel(wallet.meta.label).then(
+        found_wallet => {
+          let index = wallets.indexOf(found_wallet);
+          wallets[index] = Object.assign(new Wallet(), wallet);
+          this.setWallets(wallets);
+        },
+        not_found => {
+          wallets.push(Object.assign(new Wallet(), wallet));
+          this.setWallets(wallets);
+        }
+        );
+    });
+  }
+
+  private setWallets(wallets:Array<any>)
+  {
+    //Sort the wallet
+    wallets.sort(function(a:any,b:any){
+      if (a.meta.type == "kittycash")
+      {
+        return 0;
+      }
+      else
+      {
+        return 1;
+      }
+
+      
+    });
+
+    this.walletsSubject.next(wallets);
+  }
+
+  private findWalletByLabel(label:string):Promise<any>
+  {
+    return new Promise<any>((resolve, reject) => {
+      this.wallets.take(1).subscribe(wallets => { 
+        let wallet:any = false;
+        for (var i = 0; i < wallets.length; i++)
         {
-          let entry = entries[i];
-
-          if (!entry.kitties)
+          if (wallets[i].meta.label == label)
           {
-            entry.kitties = [];
+            wallet = wallets[i];
           }
+        }
+        if (wallet)
+        {
+          resolve(wallet);
+        }
+        else
+        {
+          reject("Wallet not found");
+        }
+      });
+    });
+  }
 
-          //Add a fake kitties
+  addKitties(wallet:any) {
+
+      for (let i = 0; i < wallet.entries.length; i++)
+      {
+        let entry = wallet.entries[i];
+
+        if (!entry.kitties)
+        {
+          entry.kitties = [];
+        }
+
+        //Add a fake kitties
 
           let kitty = new Kitty();
           kitty.kitty_id = 1;
@@ -111,9 +175,32 @@ export class WalletService {
           // this.apiService.getAddressDetails({address: entry.address}).subscribe((data) => {
           //   entry.kitties = data.kitties;
           // });
+      }
+
+    return wallet;    
+  }
+
+  loadData() {
+    this.apiService.getWalletsList().subscribe(api_wallets => {
+
+      let wallets:Array<any> = [];
+      api_wallets.map((api_wallet:any) => {
+
+        if (api_wallet.encrypted && api_wallet.locked)
+        {
+          let wallet = {
+            meta: api_wallet,
+            entries: new Array()
+          };
+
+          wallet.meta.type = "kittycash";
+          wallets.push(Object.assign(new Wallet(), wallet));
+        }
+        else
+        {
+          this.getWalletData(api_wallet.label, false);
         }
       });
-
 
       //Add in fake inventory and food wallets
       let inventory = {
@@ -208,11 +295,11 @@ export class WalletService {
 
       wallets.push(Object.assign(new Wallet(), inventory));
       wallets.push(Object.assign(new Wallet(), food));
-      this.walletsSubject.next(wallets);
+      this.setWallets(wallets);
 
       this.foodWalletSubject.next(food);
       this.inventoryWalletSubject.next(inventory);
-      console.log(wallets);
+
     });
   }
 }

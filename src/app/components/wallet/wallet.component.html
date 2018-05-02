@@ -1,5 +1,18 @@
 <app-kitten-detail *ngIf="kittyDetail"></app-kitten-detail>
-<div class="m-3" *ngIf="wallet && wallet.entries && !kittyDetail">
+<div class="m-3 mt-5" *ngIf="walletLocked(wallet)">
+	<div class="row">
+		<div class="col-12 text-center">
+			<h3>Enter password to unlock wallet</h3>
+			<div class="btn-group">
+				<input class="form-control" type="password" [(ngModel)]="walletPassword">
+				<span class="input-group-btn">
+			    	<button class="btn btn-primary" type="button" (click)="unlockWallet(wallet)">Unlock</button>
+			    </span>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="m-3" *ngIf="wallet && wallet.entries && !kittyDetail && !walletLocked(wallet)">
 	<div *ngFor="let entry of wallet.entries">
 		<div class="row wallet-bar">
 			<div class="col-6">

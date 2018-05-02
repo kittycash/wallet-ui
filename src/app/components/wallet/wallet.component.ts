@@ -15,10 +15,12 @@ export class WalletComponent implements OnInit {
 
   @Input() wallet: Wallet;
   kittyDetail: any;
+  walletPassword: any = '';
 
   constructor(private walletService: WalletService, public dialog: MatDialog) { }
 
   ngOnInit() {
+
   	this.walletService.currentKittyDetail.subscribe(kitty => {
       this.kittyDetail = kitty;
     });
@@ -26,6 +28,20 @@ export class WalletComponent implements OnInit {
     this.walletService.setCurrentEntry(this.wallet.entries[0]);
   }
 
+  unlockWallet(wallet:any){
+
+    this.walletService.getWalletData(wallet.meta.label, this.walletPassword);
+  }
+
+  walletLocked(wallet:any){
+
+    if (wallet && wallet.meta && wallet.meta.encrypted && wallet.meta.locked)
+    {
+      return true;
+    }
+
+    return false;
+  }
   addAddress() {
   	alert("Can't find endpoint for this");
   }

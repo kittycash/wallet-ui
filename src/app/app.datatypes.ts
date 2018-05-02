@@ -1,6 +1,7 @@
 export class Wallet {
   label: string;
   entries: any;
+  meta: any;
 }
 
 export class Address {
@@ -10,6 +11,7 @@ export class Address {
 
 export class WalletsGetRequest {
   label: string;
+  password: string;
 }
 
 export class WalletsNewRequest {

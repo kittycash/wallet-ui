@@ -23,7 +23,6 @@ export class ApiService {
 
   getWalletsList(): Observable<Wallet[]> {
     return this.get('wallets/list').map(response => response.wallets)
-      .flatMap(wallets => Observable.forkJoin(wallets.map((wallet:any) => this.postWalletsGet({ label: wallet.label }))));
   }
 
   getWalletsSeed(): Observable<string> {
