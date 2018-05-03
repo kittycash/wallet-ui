@@ -23,6 +23,7 @@ export class CatBoxComponent implements OnInit {
   }
 
   showKittyDetails() {
+    this.walletService.setCurrentEntry(this.entry);
     this.walletService.setCurrentKittyDetail(this.cat);
   }
   doFeed() {
@@ -39,5 +40,6 @@ export class CatBoxComponent implements OnInit {
   }
 
   @Input() cat: Kitty;
+  @Input() entry: any;
 }
 

@@ -27,3 +27,7 @@ button {
 	border-color: white;
 	background-color: $primary-color;
 }
+
+.wallet-selector.active {
+  text-decoration: underline !important;
+}

@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
   @Output() onSelect = new EventEmitter();
 
   wallets: Wallet[];
+  currentWallet: any;
 
   constructor(
     public dialog: MatDialog,
@@ -40,6 +41,8 @@ export class SidebarComponent implements OnInit {
   }
 
   open(wallet: Wallet) {
+
+    this.currentWallet = wallet;
     this.walletService.unsetCurrentKittyDetail();
     this.onSelect.emit(wallet);
   }

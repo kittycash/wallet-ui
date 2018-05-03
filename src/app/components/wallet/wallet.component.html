@@ -16,7 +16,7 @@
 	<div *ngFor="let entry of wallet.entries">
 		<div class="row wallet-bar">
 			<div class="col-6">
-				<h1>Address 1 <a (click)="doShowAddress(entry)"><small class="kittyred">Details...</small></a></h1>
+				<h1>Address 1 <a (click)="doShowAddress(entry)" *ngIf="wallet.meta.type == 'kittycash'"><small class="kittyred">Details...</small></a></h1>
 			</div>
 			
 			<div class="col-2">
@@ -41,7 +41,7 @@
 					<h3 class="mt-5">You don't have any kitties in your wallet</h3>
 				</div>
 				<div class="col-4" *ngFor="let kitty of entry.kitties">
-					<cat-box [cat]="kitty"></cat-box>
+					<cat-box [cat]="kitty" [entry]="entry"></cat-box>
 				</div>
 			</div>
 		</div>
