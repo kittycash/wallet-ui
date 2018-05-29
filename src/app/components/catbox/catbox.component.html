@@ -1,13 +1,13 @@
 <div class="cat-box py-3">
-    <button class="btn round-feed-btn" (click)="doFeed()"><img src="assets/svg/feed-round.svg"></button>
+    <button class="btn round-feed-btn no-hover" (click)="doFeed()"><img src="assets/svg/feed-round.svg"></button>
     <div class="row">
         <div class="col-12">
             <div class="row">
                 <div class="col-6 offset-3">
-                    <img [src]="boxImage(cat.kitty_id)" class="img-fluid" alt="???" *ngIf="!cat.box_open">
-                    <img [src]="cat.image" class="img-fluid pointer" alt="{{cat.name}}" *ngIf="cat.box_open" (click)="showKittyDetails()">
-                    <h2 class="pt-3" *ngIf="cat.legendary">Legendary</h2>
-                    <div class="row">
+                    <!-- <img [src]="boxImage(cat.kitty_id)" class="img-fluid" alt="???" *ngIf="!cat.box_open"> -->
+                    <img [src]="kittyImage()" class="img-fluid pointer" alt="{{cat.name}}" (click)="showKittyDetails()">
+                    <h2 class="pt-3" *ngIf="cat.Info.Legendary">Legendary</h2>
+                    <div class="row" *ngIf="false">
                         <div class="col-9">
                             <div class="progress my-3">
                               <div class="progress-bar bg-success" role="progressbar"></div>
@@ -17,9 +17,9 @@
                             <label class="float-right mt-3">0</label>
                         </div>
                     </div>
-                    <h1 *ngIf="cat.box_open">{{cat.name}}</h1>
-                    <p class="my-3" style="white-space: normal;">{{cat.bio}}</p>
-                    <p><span>Breed</span>: {{cat.breed}}</p>
+                    <h1>{{cat.Info.Name}}</h1>
+                    <!-- <p class="my-3" style="white-space: normal;">Missing Kitty Bio</p> -->
+                    <p><span>Breed</span>: {{cat.Info.Breed.breed}}</p>
                 </div>
             </div>
            

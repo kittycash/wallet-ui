@@ -10,5 +10,6 @@
 	background-color: white;
 }
 .address-panel p {
-	word-break: break-word;
+	word-break: no-wrap;
+	font-family: "Courier New", Courier, monospace;
 }

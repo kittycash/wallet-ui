@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { Wallet } from './app.datatypes';
+import { StateService } from './services';
 
 @Component({
   selector: 'app-wallet-root',
@@ -10,7 +11,18 @@ export class WalletAppComponent {
 
   wallet: Wallet;
 
-  handleOnSelect(wallet: Wallet) {
-    this.wallet = wallet;
+  constructor(
+    private stateService: StateService
+  ) { }
+
+  ngOnInit() {
+    this.stateService.currentWallet.subscribe(wallet => {
+      this.wallet = wallet;
+    });
+  }
+
+  exportWallet() {
+    console.log("Wallet export!");
+    alert("Wow!");
   }
 }

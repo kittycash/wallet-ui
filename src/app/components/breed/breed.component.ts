@@ -47,4 +47,8 @@ export class BreedComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  kittyImage(kitty_id:any) {
+    return "https://staging-api.kittycash.com/v1/image/" + kitty_id;
+  }
+
 }

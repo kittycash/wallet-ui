@@ -7,30 +7,74 @@ import { RequestOptions } from '@angular/http';
 @Injectable()
 export class ApiService {
 
-  private url = 'http://127.0.0.1:6148/api/';
+  private url = 'http://127.0.0.1:6148/v1/';
 
   constructor(
     private httpClient: HttpClient,
   ) { }
 
   getAddressDetails(request: AddressGetRequest): Observable<Address>{
-    return this.get("iko/address/" + request.address, {type: 'json'});
+    return this.get("balance/", {address: request.address}, {});
   }
   
   postWalletsGet(request: WalletsGetRequest): Observable<Wallet> {
-    return this.post('wallets/get', request);
+    return this.post('wallets/get', request, {});
   }
 
   getWalletsList(): Observable<Wallet[]> {
-    return this.get('wallets/list').map(response => response.wallets)
+    return this.get('wallets/list', {}, {}).map(response => response.wallets)
   }
 
   getWalletsSeed(): Observable<string> {
-    return this.post('wallets/seed').map(response => response.seed);
+    return this.post('wallets/seed', {}, {}).map(response => response.seed);
   }
 
   postWalletsNew(request: WalletsNewRequest): Observable<Wallet> {
-    return this.post('wallets/new', request);
+    return this.post('wallets/new', request, {});
+  }
+
+  transferKitty(kitty_id:any, to_address:any, secret_key:any): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.createSignature(kitty_id, to_address, secret_key).then(signature => {
+
+        this.post('transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}).subscribe(transfer => {
+          if (transfer && transfer.success)
+          {
+            resolve(true);
+          }
+          else
+          {
+            reject(false);
+          }
+        });
+      });
+    });
+  }
+
+  createSignature(kitty_id:any, to_address:any, secret_key:any): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.lastTransfer(kitty_id).subscribe(transfer => {
+         let signature = null;
+
+         if (transfer && transfer.transaction && transfer.transaction.sig)
+         {
+           signature = transfer.transaction.sig;
+         }
+        
+        this.post('tools/sign_transfer_params', {kittyID: kitty_id, lastTransferSig: signature, toAddress: to_address, secretKey: secret_key}, {}).subscribe(sig => {
+          resolve(sig.sig);
+        });
+          
+      }, err => {
+        this.post('tools/sign_transfer_params', {kittyID: kitty_id, toAddress: to_address, secretKey: secret_key}, {}).subscribe(sig => {
+          resolve(sig.sig);
+        });
+      });
+    });
+  }
+
+  lastTransfer(kitty_id:any): Observable<any> {
+    return this.get('last_transfer', {kitty_id: kitty_id}, {});
   }
 
   private get(url: any, params:any = null, options:any = {}) {
@@ -39,7 +83,7 @@ export class ApiService {
   }
 
   private post(url:any, params:any = {}, options: any = {}) {
-    return this.httpClient.post(this.getUrl(url), this.getQueryString(params), this.getOptions())
+    return this.httpClient.post(this.getUrl(url, params), this.getQueryString(params), this.getOptions())
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 
@@ -63,6 +107,6 @@ export class ApiService {
   }
 
   private getUrl(url:any, options:any = null) {
-    return this.url + url + '?' + this.getQueryString(options);
+      return this.url + url + '?' + this.getQueryString(options);    
   }
 }

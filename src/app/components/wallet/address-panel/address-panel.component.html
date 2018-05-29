@@ -1,8 +1,10 @@
-<a class="btn-close-modal" (click)="closeWindow()">X</a>
-<h3>Address 1</h3>
+<a class="btn-close-modal" (click)="closeWindow()"><i class="fa fa-times"></i></a>
+<h3>Address</h3>
 <div class="row">
 	<div class="col-6 offset-3 address-panel">
 		 <ngx-qrcode [qrc-element-type]="QRType" [qrc-value] = "entry.address"></ngx-qrcode>
-		 <p>{{entry.address}}</p>
+	</div>
+	<div class="col-12 text-center">
+		<p>{{entry.address}}</p>
 	</div>
 </div>

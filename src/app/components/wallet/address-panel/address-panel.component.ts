@@ -18,7 +18,6 @@ export class AddressPanelComponent implements OnInit {
   ngOnInit() {
   	 this.walletService.currentEntry.subscribe(entry => {
       this.entry = entry;
-      console.log(entry);
     });
   }
 

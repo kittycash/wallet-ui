@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { AddressPanelComponent } from '../wallet/address-panel/address-panel.component';
 import { BreedComponent } from '../breed/breed.component';
 import { EquipComponent } from '../equip/equip.component';
+import { SendComponent } from '../send/send.component';
 
 @Component({
   selector: 'app-kitten-detail',
@@ -50,6 +51,11 @@ export class KittenDetailComponent implements OnInit {
   	alert("Marketplace coming soon!");
   }
 
+  doSend() {
+    this.walletService.setCurrentKitty(this.kitty);
+    let dialogRef = this.dialog.open(SendComponent, { width: '700px' });
+  }
+
   doEquip(item:any) {
     this.walletService.setCurrentItem(item);
     let dialogRef = this.dialog.open(EquipComponent, { width: '400px' });
@@ -58,6 +64,10 @@ export class KittenDetailComponent implements OnInit {
   doFeed(item:any) {
     this.walletService.setCurrentItem(item);
     let dialogRef = this.dialog.open(EquipComponent, { width: '400px' });
+  }
+
+  kittyImage() {
+    return "https://staging-api.kittycash.com/v1/image/" + this.kitty.Info.ID;
   }
 
 }

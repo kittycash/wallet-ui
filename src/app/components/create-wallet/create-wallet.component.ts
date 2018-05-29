@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services';
+import { ApiService, StateService } from '../../services';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -15,6 +15,7 @@ export class CreateWalletComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
+    private stateService: StateService,
     private dialogRef:MatDialogRef<CreateWalletComponent>
   ) { }
 
@@ -104,6 +105,8 @@ export class CreateWalletComponent implements OnInit {
       };
 
       this.apiService.postWalletsNew(request).subscribe(response => {
+
+        this.stateService.setWalletByLabel(this.new_wallet.name);
         this.closeWindow();
       });
     }

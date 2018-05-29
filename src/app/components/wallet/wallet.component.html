@@ -1,5 +1,5 @@
 <app-kitten-detail *ngIf="kittyDetail"></app-kitten-detail>
-<div class="m-3 mt-5" *ngIf="walletLocked(wallet)">
+<div class="p-3 mt-5" *ngIf="walletLocked(wallet)">
 	<div class="row">
 		<div class="col-12 text-center">
 			<h3>Enter password to unlock wallet</h3>
@@ -12,66 +12,67 @@
 		</div>
 	</div>
 </div>
-<div class="m-3" *ngIf="wallet && wallet.entries && !kittyDetail && !walletLocked(wallet)">
-	<div *ngFor="let entry of wallet.entries">
-		<div class="row wallet-bar">
-			<div class="col-6">
-				<h1>Address 1 <a (click)="doShowAddress(entry)" *ngIf="wallet.meta.type == 'kittycash'"><small class="kittyred">Details...</small></a></h1>
-			</div>
-			
-			<div class="col-2">
-				<button class="btn btn-outline-primary btn-round" (click)="doBreed(entry)" *ngIf="wallet.meta.type == 'kittycash'"><img src="assets/svg/breed-btn.svg"> Breed</button>
-			</div>
-			<div class="col-2">
-				<button class="btn btn-outline-primary btn-round" (click)="doFeed(false)" *ngIf="wallet.meta.type == 'kittycash' || wallet.meta.type == 'food'"><img src="assets/svg/feed-btn.svg"> Feed All</button>
-			</div>
-			<div class="col-2">
-				<a class="float-right" (click)="toggleCollapse(entry)">
-					<img *ngIf="!entry.collapse" src="assets/svg/caret-up.svg">
-					<img *ngIf="entry.collapse" src="assets/svg/caret-down.svg">
-				</a>
-				<h1 class="float-right" style="margin-right: 15px;">{{entry.kitties.length}} Items </h1>
+<div class="p-3 wallet-container" *ngIf="wallet && wallet.entries && !kittyDetail && !walletLocked(wallet)">
+	<div *ngFor="let entry of wallet.entries; let i = index">
+		<div *ngIf="entry.kitties ">
+			<div class="row wallet-bar" [ngClass]="{'mb-3': entry.collapse}">
+				<div class="col-3">
+					<h1>Address {{i + 1}} <a (click)="doShowAddress(entry)" *ngIf="wallet.meta.type == 'kittycash'"><small class="kittyred">Details...</small></a></h1>
+				</div>
+				
+				<div class="col-9">
+									
+					<a class="float-right" (click)="toggleCollapse(entry)">
+						<img *ngIf="!entry.collapse" src="assets/svg/caret-up.svg">
+						<img *ngIf="entry.collapse" src="assets/svg/caret-down.svg">
+					</a>
+					<h1 class="float-right mx-5" style="margin-right: 15px;">{{entry.kitties.length}} Items </h1>
+
+					<button class="btn btn-outline-primary btn-round float-right ml-5" (click)="doFeed(false)" *ngIf="wallet.meta.type == 'kittycash' || wallet.meta.type == 'food'"><img src="assets/svg/feed-btn.svg"> Feed All</button>
+
+					<button class="btn btn-outline-primary btn-round float-right" (click)="doBreed(entry)" *ngIf="wallet.meta.type == 'kittycash'"><img src="assets/svg/breed-btn.svg"> Breed</button>
+				</div>
 			</div>
 
-		</div>
-
-		<div *ngIf="wallet.meta.type == 'kittycash'">
-			<div class="row mt-3" [ngClass]="{'collapse': entry.collapse}">
-				<div class="col-12" *ngIf="!entry.kitties || entry.kitties.length <= 0">
-					<h3 class="mt-5">You don't have any kitties in your wallet</h3>
-				</div>
-				<div class="col-4" *ngFor="let kitty of entry.kitties">
-					<cat-box [cat]="kitty" [entry]="entry"></cat-box>
-				</div>
-			</div>
-		</div>
-
-		<div *ngIf="wallet.meta.type == 'inventory'">
-			<div class="row mt-3" [ngClass]="{'collapse': entry.collapse}">
-				<div class="col-12" *ngIf="!entry.kitties || entry.kitties.length <= 0">
-					<h3 class="mt-5">You don't have any inventory in your wallet</h3>
-				</div>
-				<div class="col-4" *ngFor="let item of entry.kitties">
-					<item-box [item]="item"></item-box>
+			<div *ngIf="wallet.meta.type == 'kittycash'">
+				<div class="row mt-3" [ngClass]="{'collapse': entry.collapse}">
+					<div class="col-12 mb-5" *ngIf="!entry.kitties || entry.kitties.length <= 0">
+						<h3 class="mt-5">You don't have any kitties in this address</h3>
+					</div>
+					<div class="col-4" *ngFor="let kitty of entry.kitties">
+						<cat-box [cat]="kitty" [entry]="entry"></cat-box>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div *ngIf="wallet.meta.type == 'food'">
-			<div class="row mt-3" [ngClass]="{'collapse': entry.collapse}">
-				<div class="col-12" *ngIf="!entry.kitties || entry.kitties.length <= 0">
-					<h3 class="mt-5">You don't have any inventory in your wallet</h3>
-				</div>
-				<div class="col-4" *ngFor="let item of entry.kitties">
-					<item-box [item]="item"></item-box>
+			<div *ngIf="wallet.meta.type == 'inventory'">
+				<div class="row mt-3" [ngClass]="{'collapse': entry.collapse}">
+					<div class="col-12" *ngIf="!entry.kitties || entry.kitties.length <= 0">
+						<h3 class="mt-5">You don't have any inventory in this address</h3>
+					</div>
+					<div class="col-4" *ngFor="let item of entry.kitties">
+						<item-box [item]="item"></item-box>
+					</div>
 				</div>
 			</div>
+
+			<div *ngIf="wallet.meta.type == 'food'">
+				<div class="row mt-3" [ngClass]="{'collapse': entry.collapse}">
+					<div class="col-12" *ngIf="!entry.kitties || entry.kitties.length <= 0">
+						<h3 class="mt-5">You don't have any inventory in this address</h3>
+					</div>
+					<div class="col-4" *ngFor="let item of entry.kitties">
+						<item-box [item]="item"></item-box>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-12">
-			<button class="btn btn-primary" (click)="addAddress()" disabled="disabled">+ Address</button>
+			<button class="btn btn-primary" (click)="addAddress(wallet)">+ Address</button>
 		</div>
 	</div>
 	<!-- {{ wallet | json }} -->

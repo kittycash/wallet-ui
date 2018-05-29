@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { WalletService } from '../../services';
+import { Component, EventEmitter, OnInit, Output, HostListener } from '@angular/core';
+import { WalletService, StateService } from '../../services';
 import { Wallet } from '../../app.datatypes';
 import { MatDialog } from '@angular/material';
 import { CreateWalletComponent } from '../create-wallet/create-wallet.component';
@@ -16,18 +16,40 @@ export class SidebarComponent implements OnInit {
   wallets: Wallet[];
   currentWallet: any;
 
+  @HostListener('document:refreshButtonClick', ['$event'])
+    onRefresh(ev:any) {
+      ev.preventDefault();
+      //Do refresh
+      this.walletService.loadData();
+  }
+
+  @HostListener('document:exportWallet', ['$event'])
+    onExport(ev:any) {
+      console.log("Let's export some wallets!");
+      console.log(ev);
+      ev.preventDefault();
+      //Do refresh
+     // this.walletService.loadData();
+  }
+
   constructor(
     public dialog: MatDialog,
     private walletService: WalletService,
+    private stateService: StateService
   ) { }
 
   ngOnInit() {
     this.walletService.wallets.subscribe(wallets => {
       this.wallets = wallets;
 
-      if (this.wallets && this.wallets[0]) {
-        this.open(this.wallets[0]);
-      }
+      // if (this.wallets && this.wallets[0]) {
+      //   this.open(this.wallets[0]);
+      // }
+    });
+
+    this.stateService.currentWallet.subscribe(wallet => {
+      this.currentWallet = wallet;
+
     });
   }
 
@@ -35,15 +57,11 @@ export class SidebarComponent implements OnInit {
     let dialogRef = this.dialog.open(CreateWalletComponent, { width: '700px' });
     let __this = this;
     dialogRef.afterClosed().subscribe(result => {
-      //Refresh the wallets
-      __this.walletService.loadData();
+
     });
   }
 
   open(wallet: Wallet) {
-
-    this.currentWallet = wallet;
-    this.walletService.unsetCurrentKittyDetail();
-    this.onSelect.emit(wallet);
+    this.stateService.setWallet(wallet);
   }
 }

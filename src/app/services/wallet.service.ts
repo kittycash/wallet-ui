@@ -73,7 +73,7 @@ export class WalletService {
   }
 
   getWalletData(label:string, password:any) {
-     this.apiService.postWalletsGet({ label: label, password: password }).subscribe(wallet => {
+     this.apiService.postWalletsGet({ label: label, password: password, aCount: 1 }).subscribe(wallet => {
        this.updateWallet(this.addKitties(wallet));
      }, 
      error => {
@@ -97,6 +97,14 @@ export class WalletService {
     });
   }
 
+  transferKitty(kitty_id: any, to_address: any, secret_key: any): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.apiService.transferKitty(kitty_id, to_address, secret_key).then(result => {
+        resolve(true);
+      });
+    });
+  }
+
   private setWallets(wallets:Array<any>)
   {
     //Sort the wallet
@@ -109,8 +117,6 @@ export class WalletService {
       {
         return 1;
       }
-
-      
     });
 
     this.walletsSubject.next(wallets);
@@ -151,35 +157,25 @@ export class WalletService {
           entry.kitties = [];
         }
 
-        //Add a fake kitties
-
-          let kitty = new Kitty();
-          kitty.kitty_id = 1;
-          kitty.name = "Shitrock";
-          kitty.breed = "Tabby";
-          kitty.bio = "Shitrock lives in sunnyvale trailer park";
-          kitty.box_open = true;
-          kitty.image = "assets/cats/fake1.png";
-          entry.kitties.push(kitty);
-
-          let kitty2 = new Kitty();
-          kitty2.kitty_id = 2;
-          kitty2.name = "Steve French";
-          kitty2.breed = "Tabby";
-          kitty2.bio = "If you love something, let it free";
-          kitty2.box_open = true;
-          kitty2.image = "assets/cats/fake2.png";
-          entry.kitties.push(kitty2);
-
-          //Don't know how to get actual kitties into the wallet, but this will inject them to the object if they are there
-          // this.apiService.getAddressDetails({address: entry.address}).subscribe((data) => {
-          //   entry.kitties = data.kitties;
-          // });
+        if (i > 0)
+        {
+          entry.collapse = true;
+        }
+        
+        this.apiService.getAddressDetails({address: entry.address}).subscribe((data:any) => {
+          if (data && data.Addresses && data.Addresses[entry.address])
+          {
+            let address = data.Addresses[entry.address];
+            entry.kitties = address;
+          }
+          
+        });
       }
 
     return wallet;    
   }
 
+ 
   loadData() {
     this.apiService.getWalletsList().subscribe(api_wallets => {
 

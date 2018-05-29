@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Wallet } from '../../app.datatypes';
-import { WalletService } from '../../services';
+import { WalletService, ApiService } from '../../services';
 import { MatDialog } from '@angular/material';
 import { AddressPanelComponent } from './address-panel/address-panel.component';
 import { BreedComponent } from '../breed/breed.component';
@@ -17,7 +17,9 @@ export class WalletComponent implements OnInit {
   kittyDetail: any;
   walletPassword: any = '';
 
-  constructor(private walletService: WalletService, public dialog: MatDialog) { }
+  constructor(private walletService: WalletService, 
+              private apiService: ApiService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -42,8 +44,19 @@ export class WalletComponent implements OnInit {
 
     return false;
   }
-  addAddress() {
-  	alert("Can't find endpoint for this");
+  addAddress(wallet:any) {
+
+    console.log(wallet);
+  	const request:any = {
+      label: wallet.meta.label,
+      aCount: wallet.entry_count + 1,
+    };
+    let __this = this;
+    this.apiService.postWalletsGet(request).subscribe(response => {
+      __this.walletService.loadData();
+    });
+
+    
   }
 
   toggleCollapse(entry:any) {

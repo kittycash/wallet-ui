@@ -3,17 +3,17 @@
 		<div class="col-6">
 			<div class="row">
 				<div class="col-12">
-					<h2 class="mb-2">{{kitty.name}}</h2>
+					<h2 class="mb-2">{{kitty.Info.Name}}</h2>
 					<div class="cat-box">
 						<div class="row">
 							<div class="col-8 offset-2 text-center">
-								<h2 class="pt-3" *ngIf="kitty.legendary">Legendary</h2>
-								<img [src]="kitty.image" class="img-fluid px-5" alt="{{kitty.name}}">
+								<h2 class="pt-3" *ngIf="kitty.Info.Legendary">Legendary</h2>
+								<img [src]="kittyImage()" class="img-fluid px-5" alt="{{kitty.Info.Name}}">
 
-								<div class="progress my-3 mx-5">
+								<!-- <div class="progress my-3 mx-5">
 	                              <div class="progress-bar bg-success" role="progressbar"></div>
 	                            </div>
-	                            <p class="my-3" style="white-space: normal;">{{kitty.bio}}</p>
+	                            <p class="my-3" style="white-space: normal;">{{kitty.bio}}</p> -->
 		                    </div>	                   
 		           		</div>
 					</div>
@@ -99,7 +99,7 @@
 	</div>
 	<div class="row mb-2">
 		<div class="col-2">
-			<button class="btn btn-block btn-outline-primary mx-4" (click)="doBuy()">Buy</button>
+			<button class="btn btn-block btn-outline-primary mx-4" (click)="doSend()">Send</button>
 		</div>
 		<div class="col-2">
 			<button class="btn btn-block btn-outline-primary mx-4" (click)="doBreed()">Sire</button>

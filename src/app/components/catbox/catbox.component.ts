@@ -35,6 +35,10 @@ export class CatBoxComponent implements OnInit {
     return "assets/fake_cdn/box-" + ((kitty_id % 5) + 1) + ".png";
   }
 
+  kittyImage() {
+    return "https://staging-api.kittycash.com/v1/image/" + this.cat.Info.ID;
+  }
+
   removeDetails() {
     this.cat.details = false;
   }

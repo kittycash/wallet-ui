@@ -12,6 +12,7 @@ export class Address {
 export class WalletsGetRequest {
   label: string;
   password: string;
+  aCount: number;
 }
 
 export class WalletsNewRequest {
@@ -33,6 +34,7 @@ export class Kitty {
     this.reservation_data = {step: 'confirm_email'};
     this.box_image_url = '/assets/fake_cdn/box-1.png';
   }
+  Info: any;
   kitty_id: number;
   box_image_url: string;
   breed: string;

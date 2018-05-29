@@ -15,10 +15,11 @@ import { BreedComponent } from './components/breed/breed.component';
 import { KittenDetailComponent } from './components/kitten-detail/kitten-detail.component';
 import { CatBoxComponent } from './components/catbox/catbox.component';
 import { ItemBoxComponent } from './components/itembox/itembox.component';
+import { SendComponent } from './components/send/send.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ApiService, AppService, WalletService } from './services';
+import { ApiService, AppService, WalletService, StateService } from './services';
 import { HttpClientModule } from '@angular/common/http';
 import './rxjs-operators';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,6 +45,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     KittenDetailComponent,
     CatBoxComponent,
     ItemBoxComponent,
+    SendComponent,
     SatoshiPipe,
     DropletsPipe
   ],
@@ -52,6 +54,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     BreedComponent,
     FeedComponent,
     EquipComponent,
+    SendComponent,
     AddressPanelComponent
   ],
   imports: [
@@ -63,12 +66,13 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
   ],
   providers: [
     AppService,
     ApiService,
     WalletService,
+    StateService
   ],
   exports: [
     WalletAppComponent,

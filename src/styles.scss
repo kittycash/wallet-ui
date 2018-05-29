@@ -107,6 +107,7 @@ a {
 
 .mat-dialog-container {
   background-color: #fcfcfc;
+  border-radius: 25px !important;
 }
 
 .btn-close-modal {
@@ -116,4 +117,12 @@ a {
 
 .pointer {
   cursor: pointer !important;
+}
+
+button:hover img{
+    -webkit-filter: brightness(0) invert(1);  
+}
+
+.no-hover img {
+  -webkit-filter: none !important;  
 }

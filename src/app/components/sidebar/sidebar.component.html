@@ -1,5 +1,5 @@
 <a *ngFor="let wallet of wallets" (click)="open(wallet)" class="wallet-selector" [ngClass]="{'active':wallet == currentWallet}">{{ wallet.meta.label }} <img src="assets/svg/encrypted.svg" class="float-right" *ngIf="wallet.meta.encrypted"></a>
 
-<button class="btn-create-wallet" (click)="createWallet()">
+<button class="btn-create-wallet mb-3" (click)="createWallet()">
   <img src="assets/svg/add-wallet.svg">
 </button>

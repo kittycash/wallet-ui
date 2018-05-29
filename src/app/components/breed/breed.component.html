@@ -1,4 +1,4 @@
-<a class="btn-close-modal" (click)="doClose()">X</a>
+<a class="btn-close-modal" (click)="doClose()"><i class="fa fa-times"></i></a>
 <div class="row">
 	<div class="col-12">
 		<h3> Breed </h3>
@@ -9,8 +9,8 @@
 
 <div class="row mt-5">
 	<div class="col-4 breed-selection mx-1" *ngFor="let kitty of entry.kitties" (click)="toggleKitty(kitty)" [ngClass]="{'breed-selected': kittySelected(kitty)}">
-		<img class="img-fluid" src="{{kitty.image}}">
-		<p class="text-center">{{kitty.name}}</p>
+		<img class="img-fluid" [src]="kittyImage(kitty.Info.ID)">
+		<p class="text-center">{{kitty.Info.Name}}</p>
 	</div>
 </div>
 
