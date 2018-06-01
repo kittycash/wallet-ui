@@ -8,7 +8,7 @@
 						<div class="row">
 							<div class="col-8 offset-2 text-center">
 								<h2 class="pt-3" *ngIf="kitty.Info.Legendary">Legendary</h2>
-								<img [src]="kittyImage()" class="img-fluid px-5" alt="{{kitty.Info.Name}}">
+								<img [src]="kittyImage()" class="img-fluid px-5 pointer" alt="{{kitty.Info.Name}}" (click)="doFullscreen()">
 
 								<!-- <div class="progress my-3 mx-5">
 	                              <div class="progress-bar bg-success" role="progressbar"></div>

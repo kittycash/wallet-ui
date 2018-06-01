@@ -37,26 +37,30 @@ export class WalletComponent implements OnInit {
 
   walletLocked(wallet:any){
 
-    if (wallet && wallet.meta && wallet.meta.encrypted && wallet.meta.locked)
+    if (wallet && wallet.meta && wallet.meta.type == 'kittycash' && wallet.meta.encrypted && wallet.meta.locked)
     {
       return true;
     }
 
     return false;
   }
+
   addAddress(wallet:any) {
 
-    console.log(wallet);
-  	const request:any = {
+    const request:any = {
       label: wallet.meta.label,
-      aCount: wallet.entry_count + 1,
+      aCount: wallet.total_count + 1,
     };
     let __this = this;
-    this.apiService.postWalletsGet(request).subscribe(response => {
-      __this.walletService.loadData();
+    this.apiService.postAddAddress(request).subscribe(response => {
+      __this.walletService.addAddress(wallet.meta.label);
+      __this.walletService.getWalletData(wallet.meta.label, false, wallet.paging.page);
     });
 
-    
+  }
+
+  getPage(page: number, wallet: any){
+    this.walletService.getWalletData(wallet.meta.label, false, page);
   }
 
   toggleCollapse(entry:any) {

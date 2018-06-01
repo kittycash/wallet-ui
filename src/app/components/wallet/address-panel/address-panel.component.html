@@ -4,7 +4,13 @@
 	<div class="col-6 offset-3 address-panel">
 		 <ngx-qrcode [qrc-element-type]="QRType" [qrc-value] = "entry.address"></ngx-qrcode>
 	</div>
-	<div class="col-12 text-center">
-		<p>{{entry.address}}</p>
+	<div class="col-12 text-center address-panel">
+		<div class="input-group mb-3">
+		  <input type="text" class="form-control" value="{{entry.address}}" readonly="readonly">
+		  <div class="input-group-append">
+		    <button class="btn btn-primary btn-small" (click)="copyToClipboard()"><i class="fa fa-copy"></i></button>
+		  </div>
+		</div>		
 	</div>
+
 </div>

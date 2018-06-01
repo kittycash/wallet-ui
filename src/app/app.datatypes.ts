@@ -2,6 +2,8 @@ export class Wallet {
   label: string;
   entries: any;
   meta: any;
+  paging: any;
+  total_count: number;
 }
 
 export class Address {
@@ -12,7 +14,8 @@ export class Address {
 export class WalletsGetRequest {
   label: string;
   password: string;
-  aCount: number;
+  startIndex: number;
+  pageSize: number;
 }
 
 export class WalletsNewRequest {

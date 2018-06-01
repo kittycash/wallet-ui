@@ -126,3 +126,7 @@ button:hover img{
 .no-hover img {
   -webkit-filter: none !important;  
 }
+
+.ngx-pagination .current {
+    background: $kittyred !important;
+}

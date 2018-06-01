@@ -25,4 +25,12 @@ export class AddressPanelComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  copyToClipboard() {
+    if (window['require'])
+    {
+      const {clipboard} = window['require']('electron');
+      clipboard.writeText(this.entry.address);
+    }
+  }
+
 }

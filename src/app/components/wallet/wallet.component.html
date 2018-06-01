@@ -13,11 +13,11 @@
 	</div>
 </div>
 <div class="p-3 wallet-container" *ngIf="wallet && wallet.entries && !kittyDetail && !walletLocked(wallet)">
-	<div *ngFor="let entry of wallet.entries; let i = index">
+	<div *ngFor="let entry of wallet.entries | paginate: { itemsPerPage: wallet.paging.perPage, currentPage: wallet.paging.page, totalItems: wallet.paging.total }; let i = index;">
 		<div *ngIf="entry.kitties ">
 			<div class="row wallet-bar" [ngClass]="{'mb-3': entry.collapse}">
 				<div class="col-3">
-					<h1>Address {{i + 1}} <a (click)="doShowAddress(entry)" *ngIf="wallet.meta.type == 'kittycash'"><small class="kittyred">Details...</small></a></h1>
+					<h1>Address {{i + ((wallet.paging.page - 1) * wallet.paging.perPage) + 1}} <a (click)="doShowAddress(entry)" *ngIf="wallet.meta.type == 'kittycash'"><small class="kittyred">Details...</small></a></h1>
 				</div>
 				
 				<div class="col-9">
@@ -75,5 +75,11 @@
 			<button class="btn btn-primary" (click)="addAddress(wallet)">+ Address</button>
 		</div>
 	</div>
-	<!-- {{ wallet | json }} -->
+
+
+	<div class="row mt-5" *ngIf="wallet.paging.total > wallet.paging.perPage">
+		<div class="col-12 text-center">
+			<pagination-controls (pageChange)="getPage($event, wallet)" previousLabel="Previous" nextLabel="Next"></pagination-controls>
+		</div>
+	</div>
 </div>

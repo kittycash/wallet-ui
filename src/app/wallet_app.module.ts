@@ -16,6 +16,7 @@ import { KittenDetailComponent } from './components/kitten-detail/kitten-detail.
 import { CatBoxComponent } from './components/catbox/catbox.component';
 import { ItemBoxComponent } from './components/itembox/itembox.component';
 import { SendComponent } from './components/send/send.component';
+import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -27,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SatoshiPipe } from './components/catbox/coin_converter.pipe';
 import { DropletsPipe } from './components/catbox/coin_converter.pipe';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     KittenDetailComponent,
     CatBoxComponent,
     ItemBoxComponent,
+    FullscreenComponent,
     SendComponent,
     SatoshiPipe,
     DropletsPipe
@@ -55,6 +58,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     FeedComponent,
     EquipComponent,
     SendComponent,
+    FullscreenComponent,
     AddressPanelComponent
   ],
   imports: [
@@ -67,6 +71,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     FormsModule,
     ReactiveFormsModule,
     NgxQRCodeModule,
+    NgxPaginationModule
   ],
   providers: [
     AppService,

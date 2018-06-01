@@ -9,6 +9,8 @@ import 'rxjs/add/operator/take';
 @Injectable()
 export class WalletService {
 
+  private pageSize:number = 10;
+
   private walletsSubject: Subject<Wallet[]> = new BehaviorSubject<Wallet[]>([]);
   private currentEntrySubject: Subject<any> = new BehaviorSubject<any>({});
   private currentKittySubject: Subject<any> = new BehaviorSubject<any>({});
@@ -72,13 +74,67 @@ export class WalletService {
     this.currentKittyDetailSubject.next(false);
   }
 
-  getWalletData(label:string, password:any) {
-     this.apiService.postWalletsGet({ label: label, password: password, aCount: 1 }).subscribe(wallet => {
+  getWalletData(label:string, password:any, page:number = 1) {
+
+    //Get the address count for the label
+    let aCount = this.getAddressCount(label);
+    let pagingData = this.getPagingData(aCount, page);
+
+     this.apiService.postWalletsGet({ label: label, password: password, startIndex: pagingData.startIndex, pageSize: pagingData.pageSize }).subscribe(wallet => {
+       //Update the local stored address count
+      localStorage.setItem(wallet.meta.label, wallet.total_count + "");
+       wallet.paging = pagingData;
        this.updateWallet(this.addKitties(wallet));
      }, 
      error => {
        alert(error.statusText);
      });
+  }
+
+  addAddress(label:string)
+  {
+    let aCount = this.getAddressCount(label);
+    aCount = aCount + 1;
+
+    //Needs to be stored as a string in localstorage, not a number.
+    localStorage.setItem(label, aCount + "");
+  }
+
+  private getAddressCount(label:string):number
+  {
+    let aCount = parseInt(localStorage.getItem(label));
+
+    if (!aCount)
+    {
+      aCount = 1;
+    }
+    return aCount;
+  }
+
+  private getPagingData(aCount: number, page: number = 1)
+  {
+
+    let pageSize = 0;
+
+    if (aCount < this.pageSize)
+    {
+      pageSize = aCount;
+    }
+    else if (aCount > this.pageSize && page == 1)
+    {
+      pageSize = this.pageSize;
+    }
+    else
+    {
+      pageSize = Math.min(this.pageSize - (this.pageSize * page) + aCount, this.pageSize);// aCount - (this.pageSize * page - 1);
+    } 
+    return {
+      total: aCount,
+      perPage: this.pageSize,
+      page: page,
+      startIndex: this.pageSize * (page - 1),
+      pageSize: pageSize
+    }
   }
 
   updateWallet(wallet:any) {
@@ -200,6 +256,7 @@ export class WalletService {
 
       //Add in fake inventory and food wallets
       let inventory = {
+        paging: this.getPagingData(3),
         meta: {
           encrypted: false,
           label: "Inventory",
@@ -241,6 +298,7 @@ export class WalletService {
       };
 
       let food = {
+        paging: this.getPagingData(4),
         meta: {
           encrypted: false,
           label: "Food",

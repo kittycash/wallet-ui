@@ -14,10 +14,14 @@ export class ApiService {
   ) { }
 
   getAddressDetails(request: AddressGetRequest): Observable<Address>{
-    return this.get("balance/", {address: request.address}, {});
+    return this.get("balance", {address: request.address}, {});
   }
   
   postWalletsGet(request: WalletsGetRequest): Observable<Wallet> {
+    return this.post('wallets/get_paginated', request, {});
+  }
+
+  postAddAddress(request: WalletsGetRequest): Observable<Wallet> {
     return this.post('wallets/get', request, {});
   }
 
@@ -37,7 +41,7 @@ export class ApiService {
     return new Promise<any>((resolve, reject) => {
       this.createSignature(kitty_id, to_address, secret_key).then(signature => {
 
-        this.post('transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}).subscribe(transfer => {
+        this.post('https://staging-api.kittycash.com/v1/transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}, true).subscribe(transfer => {
           if (transfer && transfer.success)
           {
             resolve(true);
@@ -82,15 +86,38 @@ export class ApiService {
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 
-  private post(url:any, params:any = {}, options: any = {}) {
-    return this.httpClient.post(this.getUrl(url, params), this.getQueryString(params), this.getOptions())
+  private post(url:any, params:any = {}, options: any = {}, override: boolean = false) {
+
+    let actual_url = this.getUrl(url, params);
+
+    if (override)
+    {
+      actual_url = url;
+    }
+
+    let p = this.getQueryString(params);
+
+    if (override)
+    {
+      p = params;
+    }
+
+    return this.httpClient.post(actual_url, p, this.getOptions(override))
       .catch((error: any) => Observable.throw(error || 'Server error'));
   }
 
-  private getOptions() {
-    const headers = {
+  private getOptions(override: boolean = false) {
+
+    let headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
     };
+
+    if (override)
+    {
+      headers = {
+        'Content-Type': 'application/json',
+      };
+    }
 
     return { headers: headers };
   }

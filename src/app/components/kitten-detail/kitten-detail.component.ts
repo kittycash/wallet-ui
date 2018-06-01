@@ -5,6 +5,7 @@ import { AddressPanelComponent } from '../wallet/address-panel/address-panel.com
 import { BreedComponent } from '../breed/breed.component';
 import { EquipComponent } from '../equip/equip.component';
 import { SendComponent } from '../send/send.component';
+import { FullscreenComponent } from '../fullscreen/fullscreen.component';
 
 @Component({
   selector: 'app-kitten-detail',
@@ -64,6 +65,11 @@ export class KittenDetailComponent implements OnInit {
   doFeed(item:any) {
     this.walletService.setCurrentItem(item);
     let dialogRef = this.dialog.open(EquipComponent, { width: '400px' });
+  }
+
+  doFullscreen() {
+    this.walletService.setCurrentKitty(this.kitty);
+    let dialogRef = this.dialog.open(FullscreenComponent, {width: '700px' });
   }
 
   kittyImage() {
