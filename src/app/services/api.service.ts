@@ -3,11 +3,10 @@ import { Wallet, WalletsGetRequest, WalletsNewRequest, AddressGetRequest, Addres
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { RequestOptions } from '@angular/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ApiService {
-
-  private url = 'http://127.0.0.1:6148/v1/';
 
   constructor(
     private httpClient: HttpClient,
@@ -41,7 +40,7 @@ export class ApiService {
     return new Promise<any>((resolve, reject) => {
       this.createSignature(kitty_id, to_address, secret_key).then(signature => {
 
-        this.post('https://staging-api.kittycash.com/v1/transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}, true).subscribe(transfer => {
+        this.post('transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}, true).subscribe(transfer => {
           if (transfer && transfer.success)
           {
             resolve(true);
@@ -134,6 +133,6 @@ export class ApiService {
   }
 
   private getUrl(url:any, options:any = null) {
-      return this.url + url + '?' + this.getQueryString(options);    
+      return environment.walletUrl + url + '?' + this.getQueryString(options);    
   }
 }

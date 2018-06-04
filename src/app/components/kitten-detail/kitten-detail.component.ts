@@ -73,7 +73,7 @@ export class KittenDetailComponent implements OnInit {
   }
 
   kittyImage() {
-    return "https://staging-api.kittycash.com/v1/image/" + this.kitty.Info.ID;
+    return this.walletService.kittyImage(this.kitty.Info.ID);
   }
 
 }

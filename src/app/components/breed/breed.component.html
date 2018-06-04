@@ -7,10 +7,12 @@
 </div>
 
 
-<div class="row mt-5">
-	<div class="col-4 breed-selection mx-1" *ngFor="let kitty of entry.kitties" (click)="toggleKitty(kitty)" [ngClass]="{'breed-selected': kittySelected(kitty)}">
-		<img class="img-fluid" [src]="kittyImage(kitty.Info.ID)">
-		<p class="text-center">{{kitty.Info.Name}}</p>
+<div class="row mt-5 breed-container">
+	<div class="col-6 breed-selection" *ngFor="let kitty of entry.kitties" (click)="toggleKitty(kitty)" [ngClass]="{'breed-selected': kittySelected(kitty)}">
+		<div class="px-5">
+			<img class="img-fluid" [src]="kittyImage(kitty.Info.ID)">
+			<p class="text-center">{{kitty.Info.Name}}</p>
+		</div>
 	</div>
 </div>
 

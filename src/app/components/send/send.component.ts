@@ -21,7 +21,6 @@ export class SendComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.walletService.currentEntry.subscribe(entry => {
       this.entry = entry;
     });
@@ -32,9 +31,7 @@ export class SendComponent implements OnInit {
           toAddress: ['', Validators.required],
           kitty_id: [this.kitty.Info.ID, Validators.required]
       });
-
     });
-
   }
 
   doSend() {
@@ -49,7 +46,7 @@ export class SendComponent implements OnInit {
   }
 
   kittyImage() {
-    return "https://staging-api.kittycash.com/v1/image/" + this.kitty.Info.ID;
+    return this.walletService.kittyImage(this.kitty.Info.ID);
   }
 
 }

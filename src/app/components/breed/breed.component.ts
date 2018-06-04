@@ -30,6 +30,7 @@ export class BreedComponent implements OnInit {
 
     return index > -1;
   }
+
   toggleKitty(kitty: any) {
     let index = this.selectedKitties.indexOf(kitty);
 
@@ -41,14 +42,19 @@ export class BreedComponent implements OnInit {
     {
       this.selectedKitties.push(kitty);
     }
+
+    if (this.selectedKitties.length > 2)
+    {
+      this.selectedKitties.shift();
+    }
   }
 
   doClose() {
     this.dialogRef.close();
   }
 
-  kittyImage(kitty_id:any) {
-    return "https://staging-api.kittycash.com/v1/image/" + kitty_id;
+  kittyImage(kitty_id:any):string {
+    return this.walletService.kittyImage(kitty_id);
   }
 
 }

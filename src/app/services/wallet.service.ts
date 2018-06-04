@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class WalletService {
@@ -46,6 +47,10 @@ export class WalletService {
 
   get currentinventoryWallet(): Observable<any> {
     return this.inventoryWalletSubject.asObservable();
+  }
+
+  kittyImage(kitty_id:any): string {
+     return environment.walletUrl + "/image/" + kitty_id;
   }
 
   constructor(

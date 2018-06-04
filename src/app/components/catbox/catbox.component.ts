@@ -36,7 +36,7 @@ export class CatBoxComponent implements OnInit {
   }
 
   kittyImage() {
-    return "https://staging-api.kittycash.com/v1/image/" + this.cat.Info.ID;
+    return this.walletService.kittyImage(this.cat.Info.ID);
   }
 
   removeDetails() {
