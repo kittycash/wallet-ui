@@ -40,7 +40,7 @@ export class ApiService {
     return new Promise<any>((resolve, reject) => {
       this.createSignature(kitty_id, to_address, secret_key).then(signature => {
 
-        this.post('transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}, true).subscribe(transfer => {
+        this.post('https://api.kittycash.com/v1/transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}, true).subscribe(transfer => {
           if (transfer && transfer.success)
           {
             resolve(true);
