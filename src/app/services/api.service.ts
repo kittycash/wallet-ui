@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Wallet, WalletsGetRequest, WalletsNewRequest, AddressGetRequest, Address } from '../app.datatypes';
+import { Wallet, WalletsGetRequest, WalletsNewRequest, AddressGetRequest, Address, RenameWalletRequest } from '../app.datatypes';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { RequestOptions } from '@angular/http';
-import { environment } from '../../environments/environment';
+
 
 @Injectable()
 export class ApiService {
+
+  private walletUrl: string = 'http://127.0.0.1:6148/v1/';
 
   constructor(
     private httpClient: HttpClient,
@@ -34,6 +36,14 @@ export class ApiService {
 
   postWalletsNew(request: WalletsNewRequest): Observable<Wallet> {
     return this.post('wallets/new', request, {});
+  }
+
+  renameWallet(request: RenameWalletRequest): Observable<any> {
+    return this.post('wallets/rename', request, {});
+  }
+
+  getTraits(): Observable<any> {
+    return this.get('traits', {}, {});
   }
 
   transferKitty(kitty_id:any, to_address:any, secret_key:any): Promise<any> {
@@ -133,6 +143,6 @@ export class ApiService {
   }
 
   private getUrl(url:any, options:any = null) {
-      return environment.walletUrl + url + '?' + this.getQueryString(options);    
+      return this.walletUrl + url + '?' + this.getQueryString(options);    
   }
 }

@@ -5,14 +5,15 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
-import { environment } from '../../environments/environment';
 
 @Injectable()
 export class WalletService {
 
+  private walletUrl: string = 'http://127.0.0.1:6148/v1/';
   private pageSize:number = 10;
 
   private walletsSubject: Subject<Wallet[]> = new BehaviorSubject<Wallet[]>([]);
+  private currentWalletSubject: Subject<any> = new BehaviorSubject<any>(false);
   private currentEntrySubject: Subject<any> = new BehaviorSubject<any>({});
   private currentKittySubject: Subject<any> = new BehaviorSubject<any>({});
   private currentItemSubject: Subject<any> = new BehaviorSubject<any>({});
@@ -23,6 +24,10 @@ export class WalletService {
 
   get wallets(): Observable<Wallet[]> {
     return this.walletsSubject.asObservable();
+  }
+
+  get currentWallet(): Observable<Wallet> {
+    return this.currentWalletSubject.asObservable();
   }
 
   get currentEntry(): Observable<any> {
@@ -50,13 +55,17 @@ export class WalletService {
   }
 
   kittyImage(kitty_id:any): string {
-     return environment.walletUrl + "/image/" + kitty_id;
+     return this.walletUrl + "/image/" + kitty_id;
   }
 
   constructor(
     private apiService: ApiService,
   ) {
     this.loadData();
+  }
+
+  setCurrentWallet(wallet: any){
+    this.currentWalletSubject.next(wallet);
   }
 
   setCurrentEntry(entry: any){
@@ -142,6 +151,29 @@ export class WalletService {
     }
   }
 
+  renameWallet(wallet: any, new_label:string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.apiService.renameWallet({label: wallet.meta.label, newLabel: new_label}).subscribe(result => { 
+        return resolve(result);
+      });
+    });
+  }
+
+  encryptWallet(wallet: any, password: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+     const request:any = {
+        label: wallet.meta.label,
+        seed: wallet.meta.seed,
+        aCount: wallet.total_count,
+        encrypted: true,
+        password: password
+      };
+      
+      this.apiService.postWalletsNew(request).subscribe(result => {
+        return resolve(result);
+      });
+    });
+  }
   updateWallet(wallet:any) {
     this.wallets.take(1).subscribe(wallets => { 
        this.findWalletByLabel(wallet.meta.label).then(
@@ -170,15 +202,40 @@ export class WalletService {
   {
     //Sort the wallet
     wallets.sort(function(a:any,b:any){
-      if (a.meta.type == "kittycash")
-      {
-        return 0;
-      }
-      else
-      {
-        return 1;
-      }
+
+       if(a.meta.label.toLowerCase() < b.meta.label.toLowerCase())
+       {
+         return -1;
+       }
+
+       if(a.meta.label.toLowerCase() > b.meta.label.toLowerCase())
+       {
+         return 1;
+       }
+       return 0;
     });
+
+    //Push the inventory wallets to the bottom
+
+    let indexes = [];
+
+    for (var i = 0; i < wallets.length; i++)
+    {
+      if (wallets[i].meta.type == "food")
+      {
+        wallets.push(wallets.splice(i, 1)[0]);
+        break;
+      }
+    }
+
+    for (var i = 0; i < wallets.length; i++)
+    {
+      if (wallets[i].meta.type == "inventory")
+      {
+        wallets.push(wallets.splice(i, 1)[0]);
+        break;
+      }
+    }
 
     this.walletsSubject.next(wallets);
   }

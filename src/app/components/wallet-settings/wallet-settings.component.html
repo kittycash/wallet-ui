@@ -1,0 +1,38 @@
+<a class="btn-close-modal" (click)="doClose()"><i class="fa fa-times"></i></a>
+<div class="row">
+	<div class="col-12">
+		<h3>Wallet Settings</h3>
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-3">
+		<label>Wallet Name:</label>
+	</div>
+	<div class="col-6">
+		<input type="text" class="form-control" [(ngModel)]="wallet_changes.label">
+	</div>
+</div>
+<div class="row mt-1">
+	<div class="col-3">
+		<label>Encrypted:</label>
+	</div>
+	<div class="col-6">
+		<input type="checkbox" class="form-control" [(ngModel)]="wallet_changes.encrypted">
+	</div>
+</div>
+
+<div class="row mt-1" *ngIf="wallet_changes.encrypted">
+	<div class="col-3">
+		<label>Password:</label>
+	</div>
+	<div class="col-6">
+		<input type="password" class="form-control" [(ngModel)]="wallet_changes.password">
+	</div>
+</div>
+
+<div class="row mt-5">
+	<div class="col-12 text-center">
+		<button class="btn btn-primary" (click)="updateWallet()">Save Changes</button>
+	</div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletService } from '../../services';
+import { WalletService, TraitService } from '../../services';
 import { MatDialog } from '@angular/material';
 import { AddressPanelComponent } from '../wallet/address-panel/address-panel.component';
 import { BreedComponent } from '../breed/breed.component';
@@ -18,12 +18,17 @@ export class KittenDetailComponent implements OnInit {
   entry: any;
   foodWallet: any;
   inventoryWallet: any;
+  traits: any;
 
-  constructor(private walletService: WalletService, public dialog: MatDialog) { }
+  constructor(private walletService: WalletService, 
+              public dialog: MatDialog,
+              private traitService: TraitService) { }
 
   ngOnInit() {
   	this.walletService.currentKittyDetail.subscribe(kitty => {
       this.kitty = kitty;
+
+      this.traits = this.traitService.lookup(this.kitty.Phenotype);
     });
 
     this.walletService.currentEntry.subscribe(entry => {
@@ -72,6 +77,10 @@ export class KittenDetailComponent implements OnInit {
     let dialogRef = this.dialog.open(FullscreenComponent, {width: '700px' });
   }
 
+  traitImage(icon:string) {
+    return this.traitService.traitImage(icon);
+  }
+  
   kittyImage() {
     return this.walletService.kittyImage(this.kitty.Info.ID);
   }

@@ -1,0 +1,14 @@
+@import '_variables.scss';
+
+mat-dialog-container {
+  border-radius: $base-size * 0.75;
+}
+
+.mat-checkbox-layout {
+  white-space: normal !important;
+}
+
+.mat-checkbox-label {
+  color: $text-color-light;
+  margin-left: $base-size;
+}

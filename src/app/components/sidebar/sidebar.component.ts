@@ -3,6 +3,7 @@ import { WalletService, StateService } from '../../services';
 import { Wallet } from '../../app.datatypes';
 import { MatDialog } from '@angular/material';
 import { CreateWalletComponent } from '../create-wallet/create-wallet.component';
+import { WalletSettingsComponent } from '../wallet-settings/wallet-settings.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -41,15 +42,21 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.walletService.wallets.subscribe(wallets => {
       this.wallets = wallets;
-
-      // if (this.wallets && this.wallets[0]) {
-      //   this.open(this.wallets[0]);
-      // }
     });
 
     this.stateService.currentWallet.subscribe(wallet => {
       this.currentWallet = wallet;
 
+    });
+  }
+
+  walletSettings(wallet: any)
+  {
+    this.walletService.setCurrentWallet(wallet);
+    let dialogRef = this.dialog.open(WalletSettingsComponent, { width: '700px' });
+    let __this = this;
+    dialogRef.afterClosed().subscribe(result => {
+   
     });
   }
 

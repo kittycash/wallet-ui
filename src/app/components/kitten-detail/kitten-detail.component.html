@@ -19,41 +19,18 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" *ngIf="traits.length > 0">
 				<div class="col-12 p-5">
 					<h2>Traits</h2>
-				<!-- 	<div class="row my-2">
+					<div class="row my-2 trait" *ngFor="let trait of traits">
 						<div class="col-4 text-center">
-							<img src="assets/traits/unicorn.svg">
+							<img class="img-fluid" [src]="traitImage(trait.icon)">
 						</div>
 						<div class="col-8 my-auto">
-							<p>Unicorn</p>
+							<p>{{trait.displayName}}</p>
 						</div>
 					</div>
-					<div class="row my-2">
-						<div class="col-4 text-center">
-							<img src="assets/traits/amaranth.svg">
-						</div>
-						<div class="col-8 my-auto">
-							<p>Amaranth Light</p>
-						</div>
-					</div>
-					<div class="row my-2">
-						<div class="col-4 text-center">
-							<img src="assets/traits/birdtail.svg">
-						</div>
-						<div class="col-8 my-auto">
-							<p>Birdtail</p>
-						</div>
-					</div>
-					<div class="row my-2">
-						<div class="col-4 text-center">
-							<img src="assets/traits/black.svg">
-						</div>
-						<div class="col-8 my-auto">
-							<p>Black</p>
-						</div>
-					</div> -->
+					
 				</div>
 			</div>
 		</div>

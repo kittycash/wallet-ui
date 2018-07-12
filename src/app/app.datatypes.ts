@@ -26,6 +26,11 @@ export class WalletsNewRequest {
   password: string;
 }
 
+export class RenameWalletRequest {
+  label: string;
+  newLabel: string;
+}
+
 export class AddressGetRequest {
   address: string;
 }

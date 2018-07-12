@@ -10,7 +10,9 @@ export class ShowSeedComponent {
   @Input() seed: string;
   @Output() onSubmit = new EventEmitter();
 
+  customSeed: boolean = false;
+
   next() {
-    this.onSubmit.emit();
+    this.onSubmit.emit(this.seed);
   }
 }

@@ -31,8 +31,13 @@ export class WalletComponent implements OnInit {
   }
 
   unlockWallet(wallet:any){
-
     this.walletService.getWalletData(wallet.meta.label, this.walletPassword);
+  }
+
+  handleKeyDown(event:any, wallet:any) {
+    if(event.keyCode == 13) {
+       this.unlockWallet(wallet);
+    }
   }
 
   walletLocked(wallet:any){

@@ -12,6 +12,7 @@ export class AddressPanelComponent implements OnInit {
 
   QRType: string = 'img';
   entry: any;
+  copied: boolean = false;
 
   constructor(private walletService: WalletService, private dialogRef:MatDialogRef<AddressPanelComponent>) { }
 
@@ -26,11 +27,18 @@ export class AddressPanelComponent implements OnInit {
   }
 
   copyToClipboard() {
+
+    let __this = this;
+    this.copied = true;
     if (window['require'])
     {
       const {clipboard} = window['require']('electron');
       clipboard.writeText(this.entry.address);
     }
+
+    setTimeout(function(){
+      __this.copied = false;
+    }, 2000);
   }
 
 }

@@ -17,10 +17,11 @@ import { CatBoxComponent } from './components/catbox/catbox.component';
 import { ItemBoxComponent } from './components/itembox/itembox.component';
 import { SendComponent } from './components/send/send.component';
 import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
+import { WalletSettingsComponent } from './components/wallet-settings/wallet-settings.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ApiService, AppService, WalletService, StateService } from './services';
+import { ApiService, AppService, WalletService, StateService, TraitService } from './services';
 import { HttpClientModule } from '@angular/common/http';
 import './rxjs-operators';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,6 +49,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CatBoxComponent,
     ItemBoxComponent,
     FullscreenComponent,
+    WalletSettingsComponent,
     SendComponent,
     SatoshiPipe,
     DropletsPipe
@@ -59,6 +61,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     EquipComponent,
     SendComponent,
     FullscreenComponent,
+    WalletSettingsComponent,
     AddressPanelComponent
   ],
   imports: [
@@ -77,7 +80,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppService,
     ApiService,
     WalletService,
-    StateService
+    StateService,
+    TraitService
   ],
   exports: [
     WalletAppComponent,

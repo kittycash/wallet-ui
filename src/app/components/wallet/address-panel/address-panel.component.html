@@ -5,6 +5,11 @@
 		 <ngx-qrcode [qrc-element-type]="QRType" [qrc-value] = "entry.address"></ngx-qrcode>
 	</div>
 	<div class="col-12 text-center address-panel">
+		<div class="tooltip bs-tooltip" role="tooltip" style="opacity: 1; right: 0; top: -50px;" *ngIf="copied">
+			  <div class="tooltip-inner">
+			    Address copied to clipboard
+			  </div>
+			</div>
 		<div class="input-group mb-3">
 		  <input type="text" class="form-control" value="{{entry.address}}" readonly="readonly">
 		  <div class="input-group-append">

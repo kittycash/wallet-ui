@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 import { Wallet } from './app.datatypes';
-import { StateService } from './services';
+import { StateService, TraitService } from './services';
 
 @Component({
   selector: 'app-wallet-root',
@@ -12,8 +12,9 @@ export class WalletAppComponent {
   wallet: Wallet;
 
   constructor(
-    private stateService: StateService
-  ) { }
+              private stateService: StateService,
+              private traitService: TraitService
+             ) { }
 
   ngOnInit() {
     this.stateService.currentWallet.subscribe(wallet => {

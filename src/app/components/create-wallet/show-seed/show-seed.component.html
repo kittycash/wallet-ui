@@ -6,12 +6,15 @@
 
 <div class="row">
 	<div class="col-12">
-		<input type="text" class="form-control monospace" readonly="readonly" [(ngModel)]="seed">
+		<input type="text" class="form-control monospace" [readonly]="!customSeed" [(ngModel)]="seed" placeholder="Type your seed here">
 	</div>
 </div>
 
 <div class="row mt-5">
-	<div class="col-12">
+	<div class="col-6">
 		<button class="btn btn-lg btn-primary" (click)="next()">Yes, I have written it down</button>
+	</div>
+	<div class="col-6">
+		<button *ngIf="!customSeed" class="btn btn-lg btn-outline-secondary float-right" (click)="customSeed = true; seed = '';">Use Custom Seed</button>
 	</div>
 </div>

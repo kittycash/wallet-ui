@@ -39,27 +39,37 @@ export class CreateWalletComponent implements OnInit {
     )
   }
 
-  handleStepThree() {
-    //Get another seed to feed with fake data
-    this.apiService.getWalletsSeed().subscribe(
-      fake_seed => {
-        if (fake_seed) {
-          let fake_seeds = this.uniq(this.seed.split(" ").concat(fake_seed.split(" ")));
-           
-          if (fake_seeds.length >= 16)
-          {
-            this.fake_seeds = this.shuffle(fake_seeds.slice(0, 16));
-            this.step = 4;
+  handleStepThree(seed:string) {
+
+   if (this.seed == seed)
+   {
+      //Get another seed to feed with fake data
+      this.apiService.getWalletsSeed().subscribe(
+        fake_seed => {
+          if (fake_seed) {
+            let fake_seeds = this.uniq(this.seed.split(" ").concat(fake_seed.split(" ")));
+             
+            if (fake_seeds.length >= 16)
+            {
+              this.fake_seeds = this.shuffle(fake_seeds.slice(0, 16));
+              this.step = 4;
+            }
+            else
+            {
+              alert("Error generating fake seeds");
+              return false;
+            }
+            
           }
-          else
-          {
-            alert("Error generating fake seeds");
-            return false;
-          }
-          
         }
-      }
-    )
+      ) 
+   }
+   else
+   {
+     this.seed = seed;
+     this.createWallet();
+   }
+    
   }
 
   private uniq(a:any) {
@@ -96,7 +106,17 @@ export class CreateWalletComponent implements OnInit {
 
     if (seed_compare == selected_compare)
     {
-      const request:any = {
+      this.createWallet();
+    }
+    else
+    {
+      alert("Sorry, that is incorrect!");
+    }
+  }
+
+  createWallet()
+  {
+    const request:any = {
         label: this.new_wallet.name,
         seed: this.seed,
         aCount: 1,
@@ -109,13 +129,7 @@ export class CreateWalletComponent implements OnInit {
         this.stateService.setWalletByLabel(this.new_wallet.name);
         this.closeWindow();
       });
-    }
-    else
-    {
-      alert("Sorry, that is incorrect!");
-    }
   }
-
   closeWindow() {
     this.dialogRef.close();
   }
