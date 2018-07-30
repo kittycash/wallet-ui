@@ -26,3 +26,11 @@ button {
 .wallet-selector.active {
   text-decoration: underline !important;
 }
+
+.label-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 170px;
+  display: inline-block;
+}

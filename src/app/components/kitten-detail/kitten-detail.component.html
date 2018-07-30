@@ -22,15 +22,12 @@
 			<div class="row" *ngIf="traits.length > 0">
 				<div class="col-12 p-5">
 					<h2>Traits</h2>
-					<div class="row my-2 trait" *ngFor="let trait of traits">
-						<div class="col-4 text-center">
-							<img class="img-fluid" [src]="traitImage(trait.icon)">
-						</div>
-						<div class="col-8 my-auto">
-							<p>{{trait.displayName}}</p>
+					<div class="row my-2">
+						<div class="col-6 my-2 trait" *ngFor="let trait of traits">
+							<img class="img-fluid" [src]="traitImage(trait.icon)" alt="{{trait.displayName}}" title="{{trait.displayName}}" style="max-width: 100px;">
 						</div>
 					</div>
-					
+				
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,8 @@
 <a *ngFor="let wallet of wallets" (click)="open(wallet)" class="wallet-selector" [ngClass]="{'active':wallet == currentWallet}">
-	{{ wallet.meta.label }} 
-	<i class="fa fa-cog" *ngIf="!wallet.meta.locked" style="font-size: 75%; color: lightgray;" (click)="walletSettings(wallet)"></i>
+	<p class="label-container">
+		{{ wallet.meta.label }} 
+	</p>
+	<i class="fa fa-cog float-right" *ngIf="!wallet.meta.locked" style="font-size: 75%; color: lightgray;" (click)="walletSettings(wallet)"></i>
 	<img src="assets/svg/encrypted.svg" class="float-right" *ngIf="wallet.meta.loacked">
 </a>
 
