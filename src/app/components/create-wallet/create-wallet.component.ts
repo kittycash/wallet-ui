@@ -127,6 +127,11 @@ export class CreateWalletComponent implements OnInit {
       this.apiService.postWalletsNew(request).subscribe(response => {
 
         this.stateService.setWalletByLabel(this.new_wallet.name);
+
+        //Fire the new wallet event to the tabs controller
+        let event = new CustomEvent('walletCreated', { cancelable: true }); 
+        document.dispatchEvent(event)
+
         this.closeWindow();
       });
   }

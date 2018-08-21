@@ -50,7 +50,7 @@ export class ApiService {
     return new Promise<any>((resolve, reject) => {
       this.createSignature(kitty_id, to_address, secret_key).then(signature => {
 
-        this.post('https://api.kittycash.io/v1/transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}, true).subscribe(transfer => {
+        this.post('transfer', {kitty_id: kitty_id, to: to_address, sig: signature}, {}, true).subscribe(transfer => {
           if (transfer && transfer.success)
           {
             resolve(true);
@@ -98,11 +98,6 @@ export class ApiService {
   private post(url:any, params:any = {}, options: any = {}, override: boolean = false) {
 
     let actual_url = this.getUrl(url, params);
-
-    if (override)
-    {
-      actual_url = url;
-    }
 
     let p = this.getQueryString(params);
 
