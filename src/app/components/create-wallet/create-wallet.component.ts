@@ -43,11 +43,13 @@ export class CreateWalletComponent implements OnInit {
 
    if (this.seed == seed)
    {
+     this.seed = "harpy harpy harpy harpy harpy harpy harpy harpy";
+
       //Get another seed to feed with fake data
       this.apiService.getWalletsSeed().subscribe(
         fake_seed => {
           if (fake_seed) {
-            let fake_seeds = this.uniq(this.seed.split(" ").concat(fake_seed.split(" ")));
+            let fake_seeds = this.seed.split(" ").concat(this.uniq(fake_seed.split(" ")));
              
             if (fake_seeds.length >= 16)
             {

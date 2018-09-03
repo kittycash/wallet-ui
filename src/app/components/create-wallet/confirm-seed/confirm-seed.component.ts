@@ -12,32 +12,61 @@ export class ConfirmSeedComponent {
   @Output() onSubmit = new EventEmitter();
   @Output() closeWindow = new EventEmitter();
 
-  selected_seeds: Array<string> = [];
+  selected_seeds: Array<any> = [];
 
   next() {
-    this.onSubmit.emit(this.selected_seeds);
+
+    //Convert the object array to a string array
+    let selected_seeds = [];
+
+    for (var i = 0; i < this.selected_seeds.length; i++)
+    {
+      selected_seeds.push(this.selected_seeds[i].word);
+    }
+
+    this.onSubmit.emit(selected_seeds);
   }
 
   doCloseWindow() {
-    console.log("Closing Window");
     this.closeWindow.emit();
   }
 
-  wordSelected(word:any)
+  wordSelected(index:any)
   {
-  	let index = this.selected_seeds.indexOf(word);
-  	return index > -1;
+
+    for (var i = 0; i < this.selected_seeds.length; i++)
+    {
+      if (this.selected_seeds[i].index == index)
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  toggleWord(word:any) {
-  	let index = this.selected_seeds.indexOf(word);
-  	if (index > -1)
-  	{
-  		this.selected_seeds.splice(index, 1);
-  	}
-  	else
-  	{
-  		this.selected_seeds.push(word);
-  	}
+  toggleWord(index:any, word:string) {
+
+    if (this.wordSelected(index))
+    {
+      let index_to_splice = -1;
+      for (var i = 0; i < this.selected_seeds.length; i++)
+      {
+        if (this.selected_seeds[i].index == index)
+        {
+          index_to_splice = i;
+          break;
+        }
+      }
+
+      if (index_to_splice > -1)
+      {
+        this.selected_seeds.splice(index_to_splice, 1);
+      }
+    }
+    else
+    {
+      this.selected_seeds.push({index: index, word: word});
+    }
   }
 }

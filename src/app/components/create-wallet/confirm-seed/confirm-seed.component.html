@@ -4,8 +4,8 @@
 </p>
 
 <div class="row">
-	<div class="col-3" *ngFor="let word of fake_seeds">
-		<button class="btn btn-block mt-1" [ngClass]="{'btn-primary': wordSelected(word), 'btn-outline-primary': !wordSelected(word)}" (click)="toggleWord(word)">{{word}}</button>
+	<div class="col-3" *ngFor="let word of fake_seeds; let i = index">
+		<button class="btn btn-block mt-1" [ngClass]="{'btn-primary': wordSelected(i), 'btn-outline-primary': !wordSelected(i)}" (click)="toggleWord(i, word)">{{word}}</button>
 	</div>
 </div>
 <div class="row mt-5">
