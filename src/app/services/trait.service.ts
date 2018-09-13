@@ -37,12 +37,12 @@ export class TraitService {
 
             let trait_id = phenotypes[property];
 
-            if (trait_container && trait_id && trait_container[trait_id])
+            if (trait_container && Number.isInteger(trait_id) && trait_container[trait_id])
             {
               //Add the trait type
               let t = trait_container[trait_id];
               t.type = formatted_property;
-               formatted_traits.push(t); 
+              formatted_traits.push(t);  
             }
           }
       }
@@ -53,39 +53,60 @@ export class TraitService {
 
   private validPropertyForColorScheme(property:any, color_scheme:any)
   {
-    const a_only_schemes = [
-      'mono_a', 
-      'mono_b'
-    ];
+    let valid = true;
 
-    const a_c_schemes = [
-      'dual_a'
-    ];
-
-    if (a_only_schemes.indexOf(color_scheme) > -1)
+    if (color_scheme == 'mono_a')
     {
       switch(property) {
         case 'body_color_b':
-            return false;
+            valid = false;
+            break;
         case 'body_color_c':
-            return false;
+            valid = false;
+            break;
         case 'body_pattern':
-            return false;
+            valid = false;
+            break
       }
     }
 
-    if (a_c_schemes.indexOf(color_scheme) > -1)
+    if (color_scheme == 'mono_b')
+    {
+      switch(property) {
+        case 'body_color_a':
+            valid = false;
+            break;
+        case 'body_pattern':
+            valid = false;
+            break;
+      }
+    }
+
+    if (color_scheme == 'dual_a')
     {
       switch(property) {
         case 'body_color_b':
-            return false;
+            valid = false;
+            break;
         case 'body_pattern':
-            return false;
+            valid = false;
+            break;
       }
     }
-    
 
-    return true;
+    if (color_scheme == 'dual_b')
+    {
+      switch(property) {
+        case 'body_color_a':
+            valid = false;
+            break;
+        case 'body_pattern':
+            valid = false;
+            break;
+      }
+    }
+
+    return valid;
   }
 
   private sortTraits(traits:any)
@@ -97,7 +118,7 @@ export class TraitService {
         //If the trait isn't defined, push to the bottom of the array
         if (s <= 0)
         {
-          s = 99999;
+          s = 1000;
         }
         trait_order[s] = '';
         return [s, trait]
